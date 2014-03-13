@@ -121,14 +121,30 @@ LogLevel          INFO
 </Input>
 
 <% iis_sites = (scope['::iis_sites'] || '').split(',')
-   iis_sites.each do |site| %>
+   iis_sites.each do |site|
+   begin
+     match_data = (/^(?<name> [\w\s]+ ) [\s_] [vV]?(?<version> (?<build> \d+$) | ((?<maj> \d+)\.(?<min> \d+) (\.(?<patch> \d+))? ) ) (?<comment> (?!\n)[\w\s\d-]+)? $/x).
+                    match(site)
+   rescue
+   end
+%>
 <Input <%= site %>> 
     Module          im_file 
     File            '<%= scope["::iis_#{site}_logdir"] %>\\*.log'
     ReadFromLast    TRUE
     Exec            if (($raw_event =~ /^#/) or ($raw_event =~ /^$/)) drop(); \
                     else w3c->parse_csv(); \
+<% if match_data %>
+                    $service = "<%= match_data[:name] %>"; \
+                    $service_version = "v<%= match_data[:version] %>"; \
+                    $service_version_build = "<%= match_data[:build] %>"; \
+                    $service_version_maj = "<%= match_data[:maj] %>"; \
+                    $service_version_min = "<%= match_data[:min] %>"; \
+                    $service_version_patch = "<%= match_data[:patch] %>"; \
+                    $service_version_comment = "<%= match_data[:comment] %>";
+<% else %>
                     $service = "<%= site %>";
+<% end %>
 </Input>
 <% end %>
 
