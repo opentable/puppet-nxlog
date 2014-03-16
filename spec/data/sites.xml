@@ -1,0 +1,95 @@
+<system.applicationHost>
+  <sites>
+    <siteDefaults>
+      <bindings>
+      </bindings>
+      <limits />
+      <logFile logFormat="W3C" directory="%SystemDrive%\inetpub\logs\LogFiles" />
+      <traceFailedRequestsLogging directory="%SystemDrive%\inetpub\logs\FailedReqLogFiles" />
+      <ftpServer>
+        <connections />
+        <security>
+          <dataChannelSecurity />
+          <commandFiltering>
+          </commandFiltering>
+          <ssl />
+          <sslClientCertificates />
+          <authentication>
+            <anonymousAuthentication />
+            <basicAuthentication />
+            <clientCertAuthentication />
+            <customAuthentication>
+              <providers>
+              </providers>
+            </customAuthentication>
+          </authentication>
+          <customAuthorization>
+            <provider />
+          </customAuthorization>
+        </security>
+        <customFeatures>
+          <providers>
+          </providers>
+        </customFeatures>
+        <messages />
+        <fileHandling />
+        <firewallSupport />
+        <userIsolation>
+          <activeDirectory />
+        </userIsolation>
+        <directoryBrowse />
+        <logFile />
+      </ftpServer>
+    </siteDefaults>
+    <applicationDefaults applicationPool="DefaultAppPool" />
+    <virtualDirectoryDefaults allowSubDirConfig="true" />
+    <site name="Default Web Site" id="1">
+      <bindings>
+        <binding protocol="https" bindingInformation="*:443:" sslFlags="0" />
+      </bindings>
+      <limits />
+      <logFile />
+      <traceFailedRequestsLogging />
+      <applicationDefaults />
+      <virtualDirectoryDefaults />
+      <ftpServer>
+        <connections />
+        <security>
+          <dataChannelSecurity />
+          <commandFiltering>
+          </commandFiltering>
+          <ssl />
+          <sslClientCertificates />
+          <authentication>
+            <anonymousAuthentication />
+            <basicAuthentication />
+            <clientCertAuthentication />
+            <customAuthentication>
+              <providers>
+              </providers>
+            </customAuthentication>
+          </authentication>
+          <customAuthorization>
+            <provider />
+          </customAuthorization>
+        </security>
+        <customFeatures>
+          <providers>
+          </providers>
+        </customFeatures>
+        <messages />
+        <fileHandling />
+        <firewallSupport />
+        <userIsolation>
+          <activeDirectory />
+        </userIsolation>
+        <directoryBrowse />
+        <logFile />
+      </ftpServer>
+      <application path="/">
+        <virtualDirectoryDefaults />
+        <virtualDirectory path="/" physicalPath="%SystemDrive%\inetpub\wwwroot" />
+      </application>
+    </site>
+  </sites>
+</system.applicationHost>
