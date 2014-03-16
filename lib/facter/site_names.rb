@@ -57,9 +57,7 @@ $/x
 
       doc = REXML::Document.new xml_str
       base_log_path = REXML::XPath.first(doc,'//siteDefaults/logFile/@directory').to_s
-      puts "1.base_log_path: #{base_log_path}"
       base_log_path = fixpoint base_log_path, replacements
-      puts "2.base_log_path: #{base_log_path}"
 
       sites = []
       doc.elements.each('//site') do |s|
