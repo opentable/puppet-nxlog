@@ -33,7 +33,7 @@ describe 'the generated config' do
   end
 
   it 'should contain an <Input sitename_v1.2.3_with_comment>' do
-    render(scope).should include('<Input sitename_v1.2.3_with_comments>')
+    render(scope).should include('<Input sitename_v1.2.3_with_comment>')
   end
   it 'should contain an <Input s2>' do
     render(scope).should include('<Input s2>')

@@ -64,6 +64,14 @@ require 'facter/site_names'
     :min     => 2,
     :patch   => 3,
     :comment => nil },
+  'Just_a_name123' =>
+  { :name    => 'Just_a_name123',
+    :version => nil,
+    :build   => nil,
+    :maj     => nil,
+    :min     => nil,
+    :patch   => nil,
+    :comment => nil },
 }.each do |name, exp|
   describe SiteNames, "when using regex on #{name.inspect}" do
     subject do
