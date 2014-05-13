@@ -35,14 +35,21 @@ LogLevel          INFO
     Module        xm_json
 </Extension>
 
+#<Processor iis_clean>
+#    Module	      pm_null
+#    Exec          $EventTime = ($date + "T" + $time + '<%= @utc_offset %>'); \
+#                  $level = "debug"; \
+#                  delete($time); \
+#                  delete($date);
+#</Processor>
+
 <Processor iis_clean>
     Module	      pm_null
-    Exec          $EventTime = ($date + "T" + $time + '<%= @utc_offset %>'); \
+    Exec          $EventTime = ($date + "T" + $time + '+0000'); \
                   $level = "debug"; \
                   delete($time); \
                   delete($date);
 </Processor>
-
 <Processor infrastructure_clean>
     Module	      pm_null
     Exec          $level = $Severity; \
