@@ -1,5 +1,7 @@
 class nxlog (
-  $install_dir = "c:\\nxlog"
+  $install_dir = "c:\\nxlog",
+  $logging_host = 'logstash',
+  $logging_port = '1938',
 ) {
 
   $script = 'c:\puppet_script_folder'
