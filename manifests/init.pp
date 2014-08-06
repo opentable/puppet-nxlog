@@ -1,7 +1,9 @@
 class nxlog (
-  $install_dir = "c:\\nxlog"
+  $enabled = false,
+  $install_dir = "c:\\nxlog",
+  $logging_host = 'logstash',
+  $logging_port = '1938',
 ) {
-
   $script = 'c:\puppet_script_folder'
   $nxlog_file = 'nxlog-ce-2.7.1191.msi'
   $nxlog_dest = "${script}\\${nxlog_file}"
@@ -25,8 +27,12 @@ class nxlog (
     install_options => ["INSTALLDIR=${install_dir}"]
   }
 
+  $service_status = $enabled ? {
+    true  => 'running',
+    false => 'stopped',
+  }
   service { 'nxlog' :
-    ensure  => running,
+    ensure  => $service_status,
     require => Package['NXLOG-CE'],
   }
 
