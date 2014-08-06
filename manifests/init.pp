@@ -28,8 +28,8 @@ class nxlog (
   }
 
   $service_status = $enabled ? {
-    true: 'running',
-    false: 'stopped'
+    true  => 'running',
+    false => 'stopped',
   }
   service { 'nxlog' :
     ensure  => $service_status,
