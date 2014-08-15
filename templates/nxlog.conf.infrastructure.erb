@@ -1,0 +1,48 @@
+<% break if @logging_config.class != Hash or @logging_config.has_key?('infrastructure') == false %>
+<% infrastructure_config = @logging_config['infrastructure'] %>
+
+<Processor infrastructure_clean>
+    Module	      pm_null
+    Exec          $level = $Severity; \
+                  delete($Severity); \
+                  delete($SeverityValue);
+</Processor>
+
+<%#
+# rewrite all input raw events to UTF-8 encoded JSON
+# also, remove EventReceivedTime that I don't care about: only care about when the original event happened
+# Also see 'iconv -l' on unix systems for a list of encodings available
+# http://nxlog-ce.sourceforge.net/nxlog-docs/en/nxlog-reference-manual.html#core_functions
+# http://nxlog-ce.sourceforge.net/nxlog-docs/en/nxlog-reference-manual.html#modules_processor
+# http://nxlog-ce.sourceforge.net/nxlog-docs/en/nxlog-reference-manual.html#xm_charconv_proc_convert_fields
+# Processors are per-route, so don't try and re-use them; they are not referentially transparent
+%>
+<Processor infrastructure_rewrite>
+    Module	      pm_null
+    Exec          convert_fields("AUTO", "utf-8"); \
+                  if defined $level $level = lc($level); \
+                  if (string($EventTime) =~ /^(\d{4}-\d{2}-\d{2})\s(\d{2}:\d{2}:\d{2})/) $EventTime = ($1 + "T" + $2 + '<%= @utc_offset %>'); \
+                  if not defined($hostname) $hostname = hostname(); \
+                  if not defined($message) and defined($http_path) $message = $http_path; \
+                  delete($EventReceivedTime); \
+                  to_json();
+</Processor>
+
+<Output logstash_infrastructure>
+    Module        om_tcp
+    Host          <%= infrastructure_config['host'] %>
+    Port          <%= infrastructure_config['port'] %>
+</Output>
+
+<Route infrastructure>
+    Path          nxlog_internal => \
+                    infrastructure_clean => infrastructure_rewrite => \
+                    logstash_infrastructure
+</Route>
+<%#
+#<Route debug_infrastructure>
+#    Path          nxlog_internal => \
+#                    infrastructure_clean => infrastructure_rewrite => \
+#                    file_out_test
+#</Route>
+%>

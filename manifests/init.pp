@@ -1,16 +1,27 @@
 class nxlog (
-  $enabled = false,
-  $install_dir = "c:\\nxlog",
-  $logging_host = 'logstash',
-  $logging_port = '1938',
+  $service_enabled    = false,
+  $install_dir        = "c:\\nxlog",
+  $logging_config     = {
+                          'iis' => {
+                            'host'   => 'logstash',
+                            'port'   => '1938',
+                            'fields' => 'date time s-sitename s-computername s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs-version cs(User-Agent) cs(Cookie) cs(Referer) cs-host sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken',
+                          },
+                          'eventlogs' => {
+                            'host' => 'logstash',
+                            'port' => '1935'
+                          },
+                          'infrastructure' => {
+                            'host' => 'logstash',
+                            'port' => '1937'
+                          }
+                        },
 ) {
   $script = 'c:\puppet_script_folder'
   $nxlog_file = 'nxlog-ce-2.7.1191.msi'
   $nxlog_dest = "${script}\\${nxlog_file}"
 
-  file { $script :
-    ensure => directory,
-  }
+  ensure_resource('file', $script, { ensure => directory} )
 
   file { $nxlog_dest :
     ensure             => present,
@@ -27,7 +38,7 @@ class nxlog (
     install_options => ["INSTALLDIR=${install_dir}"]
   }
 
-  $service_status = $enabled ? {
+  $service_status = $service_enabled ? {
     true  => 'running',
     false => 'stopped',
   }
