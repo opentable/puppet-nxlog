@@ -5,7 +5,7 @@ class nxlog (
                           'iis' => {
                             'host'   => 'logstash',
                             'port'   => '1938',
-                            'fields' => 'date time s-sitename s-computername s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs-version cs(User-Agent) cs(Cookie) cs(Referer) cs-host sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken',
+                            'fields' => $params::default_iis_fields,
                           },
                           'eventlogs' => {
                             'host' => 'logstash',
@@ -17,6 +17,8 @@ class nxlog (
                           }
                         },
 ) {
+  include nxlog::params
+
   $script = 'c:\puppet_script_folder'
   $nxlog_file = 'nxlog-ce-2.7.1191.msi'
   $nxlog_dest = "${script}\\${nxlog_file}"

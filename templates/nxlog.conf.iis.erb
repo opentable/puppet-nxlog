@@ -1,6 +1,6 @@
 <% break if @logging_config.class != Hash or @logging_config.has_key?('iis') == false %>
 <% iis_config = @logging_config['iis'] %>
-<% break if iis_config.has_key?('fields') == false %>
+<% iis_config['fields'] = scope['params::default_iis_fields'] if iis_config.has_key?('fields') == false %>
 
 <% iis_fields = scope.function_map_iis_fields([iis_config['fields']]) %>
 <% iis_fieldtypes = scope.function_map_iis_fieldtypes([iis_config['fields']]) %>
@@ -16,6 +16,7 @@
 
     Fields        <%= iis_fields %>
     FieldTypes    <%= iis_fieldtypes %>
+
     Delimiter     ' '
     QuoteChar     '"'
     EscapeControl FALSE
