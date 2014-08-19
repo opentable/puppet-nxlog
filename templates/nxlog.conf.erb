@@ -32,6 +32,8 @@ LogLevel          INFO
 
 # apps: only from within apps, port 1936
 
+<% if @logging_config.class == Hash %>
 <%= scope.function_template(['nxlog/nxlog.conf.iis.erb']) %>
 <%= scope.function_template(['nxlog/nxlog.conf.eventlog.erb']) %>
 <%= scope.function_template(['nxlog/nxlog.conf.infrastructure.erb']) %>
+<% end %>

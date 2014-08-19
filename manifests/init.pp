@@ -1,13 +1,13 @@
 class nxlog (
   $service_enabled    = false,
   $install_dir        = "c:\\nxlog",
-  $logging_config     = {
+  $logging_config     = hiera_hash('nxlog::configuration', {
                           'iis' => {
                             'host'   => 'logstash',
                             'port'   => '1938',
                             'fields' => $params::default_iis_fields,
                           },
-                          'eventlogs' => {
+                          'eventlog' => {
                             'host' => 'logstash',
                             'port' => '1935'
                           },
@@ -15,7 +15,7 @@ class nxlog (
                             'host' => 'logstash',
                             'port' => '1937'
                           }
-                        },
+                        }),
 ) {
   include nxlog::params
 
@@ -23,7 +23,7 @@ class nxlog (
   $nxlog_file = 'nxlog-ce-2.7.1191.msi'
   $nxlog_dest = "${script}\\${nxlog_file}"
 
-  ensure_resource('file', $script, { ensure => directory} )
+  ensure_resource('file', $script, { ensure => directory } )
 
   file { $nxlog_dest :
     ensure             => present,
