@@ -3,7 +3,9 @@ require 'spec_helper'
 describe 'nxlog', :type => :class do
   describe 'nxlog iis only configuration generation' do
     let(:params) {{
-      :logging_config => {
+      :service_enabled => true,
+      :install_dir     => 'c:\nxlog',
+      :logging_config  => {
         'iis' => {
           'host'   => 'logstash',
           'port'   => '1938',
@@ -38,7 +40,9 @@ describe 'nxlog', :type => :class do
 
   describe 'nxlog iis defined without logging host' do
     let(:params) {{
-      :logging_config => {
+      :service_enabled => true,
+      :install_dir     => 'c:\nxlog',
+      :logging_config  => {
         'iis' => {
           'port' => '1938',
         },
@@ -52,7 +56,9 @@ describe 'nxlog', :type => :class do
 
   describe 'nxlog iis defined without logging port' do
     let(:params) {{
-      :logging_config => {
+      :service_enabled => true,
+      :install_dir     => 'c:\nxlog',
+      :logging_config  => {
         'iis' => {
           'host' => 'logstash',
         },
@@ -66,7 +72,9 @@ describe 'nxlog', :type => :class do
 
   describe 'nxlog iis only configuration generation' do
     let(:params) {{
-      :logging_config => {
+      :service_enabled => true,
+      :install_dir     => 'c:\nxlog',
+      :logging_config  => {
         'eventlog' => {
           'host'   => 'logstash',
           'port'   => '1935',
@@ -97,7 +105,9 @@ describe 'nxlog', :type => :class do
 
   describe 'nxlog eventlog defined without logging host' do
     let(:params) {{
-      :logging_config => {
+      :service_enabled => true,
+      :install_dir     => 'c:\nxlog',
+      :logging_config  => {
         'eventlog' => {
           'port' => '1935',
         },
@@ -111,7 +121,9 @@ describe 'nxlog', :type => :class do
 
   describe 'nxlog eventlog defined without logging port' do
     let(:params) {{
-      :logging_config => {
+      :service_enabled => true,
+      :install_dir     => 'c:\nxlog',
+      :logging_config  => {
         'eventlog' => {
           'host' => 'logstash',
         },
@@ -125,7 +137,9 @@ describe 'nxlog', :type => :class do
 
   describe 'nxlog infrastructure only configuration generation' do
     let(:params) {{
-      :logging_config => {
+      :service_enabled => true,
+      :install_dir     => 'c:\nxlog',
+      :logging_config  => {
         'infrastructure' => {
           'host'   => 'logstash',
           'port'   => '1937',
@@ -152,7 +166,9 @@ describe 'nxlog', :type => :class do
 
   describe 'nxlog infrastructure defined without logging host' do
     let(:params) {{
-      :logging_config => {
+      :service_enabled => true,
+      :install_dir     => 'c:\nxlog',
+      :logging_config  => {
         'infrastructure' => {
           'port' => '1937',
         },
@@ -166,7 +182,9 @@ describe 'nxlog', :type => :class do
 
   describe 'nxlog infrastructure defined without logging port' do
     let(:params) {{
-      :logging_config => {
+      :service_enabled => true,
+      :install_dir     => 'c:\nxlog',
+      :logging_config  => {
         'infrastructure' => {
           'host' => 'logstash',
         },
@@ -180,7 +198,9 @@ describe 'nxlog', :type => :class do
 
   describe 'nxlog all configurations included' do
     let(:params) {{
-      :logging_config => {
+      :service_enabled => true,
+      :install_dir     => 'c:\nxlog',
+      :logging_config  => {
         'iis' => {
           'host'   => 'logstash',
           'port'   => '1938',
