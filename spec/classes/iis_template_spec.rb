@@ -13,6 +13,9 @@ describe 'nxlog', :type => :class do
         },
       },
     }}
+    let(:facts) {{
+      :iis_sites => 'test-site'
+    }}
 
     it { should contain_file('c:\nxlog\conf\nxlog.conf').with({
       :content => /
@@ -27,6 +30,26 @@ describe 'nxlog', :type => :class do
     }
 
     it { should contain_file('c:\nxlog\conf\nxlog.conf').with({
+        :content => /
+<Extension w3c>
+/
+      }).with({
+        :content => /
+<Processor iis_clean>
+/
+      }).with({
+        :content => /
+<Processor iis_rewrite>
+/
+      }).with({
+        :content => /
+<Input test-site>
+/
+      }).with({
+        :content => /
+<Route iis>
+/
+      }).with({
         :content => /
 <Output logstash_iis>
     Module        om_tcp
