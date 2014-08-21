@@ -28,8 +28,7 @@
     UndefValue    -
 </Extension>
 
-<%
-=begin %>
+<% if false %>
 #<Processor iis_clean>
 #    Module	      pm_null
 #    Exec          $EventTime = ($date + "T" + $time + '<%= @utc_offset %>'); \
@@ -37,8 +36,7 @@
 #                  delete($time); \
 #                  delete($date);
 #</Processor>
-<%
-=end %>
+<% end %>
 
 <Processor iis_clean>
     Module	      pm_null
@@ -92,14 +90,6 @@
     iis_clean => iis_rewrite => \
     logstash_iis
 </Route>
-<%
-=begin %>
-#<Route iis>
-# Path <%= scope['::iis_sites'] %> => \
-#    iis_clean => iis_rewrite => \
-#    logstash_iis
-#</Route>
-<%
-=end %>
+
 <% end %>
 <% end %>
