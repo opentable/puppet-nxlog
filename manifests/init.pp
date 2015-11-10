@@ -1,23 +1,8 @@
 class nxlog (
-  $service_enabled    = false,
-  $install_dir        = "c:\\nxlog",
-  $logging_config     = hiera_hash('nxlog::configuration', {
-                          'iis' => {
-                            'host'   => 'logstash',
-                            'port'   => '1938',
-                            'fields' => $params::default_iis_fields,
-                          },
-                          'eventlog' => {
-                            'host' => 'logstash',
-                            'port' => '1935'
-                          },
-                          'infrastructure' => {
-                            'host' => 'logstash',
-                            'port' => '1937'
-                          }
-                        }),
-) {
-  include nxlog::params
+  $service_enabled = $nxlog::params::service_enabled,
+  $install_dir     = $nxlog::params::install_dir,
+  $configuration   = $nxlog::params::configuration,
+) inherits nxlog::params {
 
   $script = 'c:\puppet_script_folder'
   $nxlog_file = 'nxlog-ce-2.7.1191.msi'
